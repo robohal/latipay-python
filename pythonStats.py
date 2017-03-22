@@ -1,7 +1,11 @@
 #!/usr/bin/python
 
 import MySQLdb
+from datetime import datetime
 from elasticsearch import Elasticsearch
+from scipy import stats
+import numpy as np
+import pylab
 es = Elasticsearch()
 
 db = MySQLdb.connect("127.0.0.1","root","root","latipay" )
@@ -11,6 +15,14 @@ cursor = db.cursor()
 cursor2 = db.cursor()
 cursor3 = db.cursor()
 cursor4 = db.cursor()
+cursor5 = db.cursor()
+cursor6 = db.cursor()
+cursor7 = db.cursor()
+cursor8 = db.cursor()
+cursor9 = db.cursor()
+cursor10 = db.cursor()
+cursor11 = db.cursor()
+cursor12 = db.cursor()
 # get the enriched merchant records
 cursor.execute("SELECT merchant_code FROM latipay.test5 WHERE merchant_type_text IS NOT NULL;")
 #generate a list of all merchants in the DB
@@ -27,69 +39,128 @@ row = 0
 # for merchant_code in merchants_enriched:
 
 def NZDByType():
+    typePairs = {}
     # loop through merchant types and return merchants that fit each type
     for type in types:
         type = "'" + str(type[0]) + "'"
         query = "SELECT merchant_code FROM test5 WHERE merchant_type_text=" + type + ";"
         cursor3.execute(query)
         merchant_codes_for_type = cursor3.fetchall()
-        # print merchant_codes_by_type
-        # TODO: build a key value pair for types and merchant codes OR loop through each merchant_code list and reference it against the transaction table
         # in order to sum the transactions for each type
         revenueSumByType = 0
         for merchant_code_for_type in merchant_codes_for_type:
             merchant_code_for_type = "'" + str(merchant_code_for_type[0]) + "'"
-            # print merchant_code_for_type
-            query = "SELECT receive_amount FROM transaction_order WHERE merchant_code=" + merchant_code_for_type + ";"
-            cursor3.execute(query)
-            revenue = cursor3.fetchone()
-            if revenue != None:
-                # print int(revenue[0])
-                revenueSumByType = revenueSumByType + revenue[0]
-        print type +': ' + str(revenueSumByType)
+            queryAPI = "SELECT receive_amount FROM transaction_order WHERE merchant_code=" + merchant_code_for_type + ";"
+            queryReceiver = "SELECT price FROM receiver_order WHERE receiver_code=" + merchant_code_for_type + ";"
+            # API transaction data
+            cursor7.execute(queryAPI)
+            revenueAPI = cursor7.fetchone()
+            if revenueAPI != None:
+                revenueSumByType = revenueSumByType + revenueAPI[0]
+            # Receiver / invoice data
+            cursor5.execute(queryReceiver)
+            revenueReceiver = cursor3.fetchone()
+            if revenueReceiver != None:
+                revenueSumByType = revenueSumByType + revenueReceiver[0]
+        typePairs[type] = revenueSumByType
+    print typePairs
 
 def NZDByIndustry():
+    industryPairs = {}
     for industry in industries:
         industry = "'" + str(industry[0]) + "'"
         query = "SELECT merchant_code FROM test5 WHERE merchant_industry_text=" + industry + ";"
         cursor4.execute(query)
         merchant_codes_for_industry = cursor4.fetchall()
-        # print merchant_codes_by_type
-        # TODO: build a key value pair for types and merchant codes OR loop through each merchant_code list and reference it against the transaction table
         # in order to sum the transactions for each type
         revenueSumByIndustry = 0
         for merchant_code_for_industry in merchant_codes_for_industry:
             merchant_code_for_industry = "'" + str(merchant_code_for_industry[0]) + "'"
             # print merchant_code_for_type
-            query = "SELECT receive_amount FROM transaction_order WHERE merchant_code=" + merchant_code_for_industry + ";"
-            cursor4.execute(query)
-            revenue = cursor4.fetchone()
-            if revenue != None:
-                # print int(revenue[0])
-                revenueSumByIndustry = revenueSumByIndustry + revenue[0]
-        print industry +': ' + str(revenueSumByIndustry)
+            queryAPI = "SELECT receive_amount FROM transaction_order WHERE merchant_code=" + merchant_code_for_industry + ";"
+            queryReceiver = "SELECT price FROM receiver_order WHERE receiver_code=" + merchant_code_for_industry + ";"
+            cursor6.execute(queryAPI)
+            revenueAPI = cursor6.fetchone()
+            if revenueAPI != None:
+                revenueSumByIndustry = revenueSumByIndustry + revenueAPI[0]
+            #industry receiver/invoice sumcursor4.execute(query)
+            cursor8.execute(queryAPI)
+            revenueReceiver= cursor8.fetchone()
+            if revenueReceiver != None:
+                revenueSumByIndustry = revenueSumByIndustry + revenueReceiver[0]
+        # print industry +': ' + str(revenueSumByIndustry)
+        industryPairs[industry] = revenueSumByIndustry
+    print industryPairs
 
-    # print ('processing: ' + str(row))
-    # merchant_code = "'" + merchant_code[0] + "'"
-    
-    
-    # merchant_name = cursor3.fetchone()
-    # if merchant_name != None:
-    #     merchant_name = "'" + merchant_name[0] + "'"
-    # else: merchant_name = "null"
+def NZDByCodeByDate():
+    fundsArray = {'merchants':[]}
+    # generate arrays for each merchant for times
+    # times should start at the create date for the account
+    # iterator should sum transactions by day.  Transaction sum for a given day should be the Y axis.  Day is X axis.
+    query = "SELECT merchant_code FROM test5;"
+    cursor9.execute(query)
+    merchant_codes = cursor9.fetchall()
+    row = 0
+    for merchant_code in merchant_codes:
+        
+        merchant_code = "'" + merchant_code[0] + "'"
+        merchant_code = str(merchant_code)
+        # print merchant_code
+        query = "SELECT price, create_date FROM receiver_order WHERE price IS NOT NULL AND receiver_code=" + merchant_code + ";"
+        queryDates = "SELECT create_date FROM receiver_order WHERE price IS NOT NULL AND receiver_code=" + merchant_code + ";"
+        cursor10.execute(query)
+        received_funds = cursor10.fetchall()
+        cursor11.execute(queryDates)
+        dateList = cursor11.fetchall()
+        # print dateList
+        if received_funds:
+            #getting first and last dates of transactions for a given merchant
+            firstDate = min(dateList)
+            lastDate = max(dateList)
+            firstDate = firstDate[0].date()
+            lastDate = lastDate[0].date()
+            firstMonth = firstDate.month
+            firstYear = firstDate.year
+            lastMonth = lastDate.month
+            lastYear = lastDate.year
+            # print firstMonth, 
+            # print firstYear
+            # print lastMonth, 
+            # print lastYear
 
-    #tracks progress
-    # row = row + 1
+            queryYear = firstYear
+            queryMonth = firstMonth
+            print queryYear
+            print lastYear
+            print queryMonth
+            while queryYear <= lastYear:
+                queryMonth = 1
+                print 'bucketing by year'
+                while ((queryMonth <= lastMonth) or (queryYear < lastYear) and (queryMonth <= 12)):
+                    # print 'bucketing by month'
+                    queryTransactionsByMonth = "SELECT price FROM receiver_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
+                    cursor12.execute(queryTransactionsByMonth)
+                    monthTransactions = cursor12.fetchall()
+                    print 'month: ' + str(queryMonth) + ' ' + str(queryYear)
+                    print monthTransactions
+                    queryMonth = queryMonth + 1
+                queryYear = queryYear + 1
+            # print monthTransactions
+            # for transaction in received_funds:
+            #     print transaction[0]
+            #     day = transaction[1]
+            #     print day
+            # print received_funds[0]
+        
+        if row == 0:
+            break
+        row = row + 1
 
-    # insert1 = "INSERT INTO test6 (merchant_code, merchant_name, merchant_address_street, merchant_address_city, merchant_address_province, merchant_address_country, merchant_email, merchant_phone, merchant_comment, merchant_type_text, merchant_industry_text, merchant_physical_presence_text, merchant_residence_text, merchant_incorporation_text, merchant_trade_country_text, merchant_product_text) VALUES ("
-    # insert2 = merchant_code + ',' + merchant_name + ',' + merchant_address_street + ',' + merchant_address_city + ',' + merchant_address_province + ',' + merchant_address_country + ',' + merchant_email + ',' + merchant_phone + ',' + merchant_comment + ',' + merchant_type_text + ',' + merchant_industry_text + ',' + merchant_physical_presence_text + ',' + merchant_residence_text + ',' + merchant_incorporation_text + ',' + merchant_trade_country_text + ',' + merchant_product_text + ");"
-    # insertQuery = insert1 + insert2
-    # cursor29.execute(insertQuery)
-    # db.commit()
-
-NZDByType()
+# NZDByType()
+# print ''
+# NZDByIndustry()
 print ''
-NZDByIndustry()   
+NZDByCodeByDate()
 
 
 
