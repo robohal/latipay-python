@@ -102,7 +102,7 @@ def NZDByCodeByDate():
     merchant_codes = cursor9.fetchall()
     row = 0
     for merchant_code in merchant_codes:
-        
+        var_dic = {}
         merchant_code = "'" + merchant_code[0] + "'"
         merchant_code = str(merchant_code)
         # print merchant_code
@@ -123,38 +123,44 @@ def NZDByCodeByDate():
             firstYear = firstDate.year
             lastMonth = lastDate.month
             lastYear = lastDate.year
-            # print firstMonth, 
-            # print firstYear
-            # print lastMonth, 
-            # print lastYear
 
             queryYear = firstYear
             queryMonth = firstMonth
             print queryYear
             print lastYear
             print queryMonth
+            monthIterator = 1
             while queryYear <= lastYear:
-                queryMonth = 1
+                if queryYear != firstYear:
+                    queryMonth = 1
+                else: queryMonth = firstMonth
                 print 'bucketing by year'
-                while ((queryMonth <= lastMonth) or (queryYear < lastYear) and (queryMonth <= 12)):
-                    # print 'bucketing by month'
-                    queryTransactionsByMonth = "SELECT price FROM receiver_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
-                    cursor12.execute(queryTransactionsByMonth)
-                    monthTransactions = cursor12.fetchall()
-                    print 'month: ' + str(queryMonth) + ' ' + str(queryYear)
-                    print monthTransactions
-                    queryMonth = queryMonth + 1
-                queryYear = queryYear + 1
-            # print monthTransactions
-            # for transaction in received_funds:
-            #     print transaction[0]
-            #     day = transaction[1]
-            #     print day
-            # print received_funds[0]
-        
+                while ((queryMonth <= lastMonth) or (queryYear < lastYear) and (queryMonth <= 12) and monthIterator <= 24):
+                    for monthIterator in range(1,25):
+                        
+                        # var_dic["month%s"% str(monthIterator)] = 0
+                        
+                        queryTransactionsByMonth = "SELECT price FROM receiver_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
+                        cursor12.execute(queryTransactionsByMonth)
+                        monthTransactions = cursor12.fetchall()
+                        monthSum = 0
+                        for transaction in monthTransactions:
+                            if transaction[0] != None:
+                                monthSum = transaction[0] + monthSum
+                        # month[monthIterator] = 0
+                        print 'fingers crossed...'
+                        print month[monthIterator]
+                        # print month2
+                        insertMonth = 'month' + str(monthIterator) + ' ' + str(monthSum)
+                        var_dic["month%s"% str(monthIterator)] = monthSum
+                        monthIterator += 1
+                        queryMonth = queryMonth + 1
+                    queryYear = queryYear + 1
+        print var_dic                       
         if row == 0:
             break
         row = row + 1
+        
 
 # NZDByType()
 # print ''
