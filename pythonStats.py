@@ -6,6 +6,7 @@ from elasticsearch import Elasticsearch
 from scipy import stats
 import numpy as np
 import pylab
+import collections
 es = Elasticsearch()
 
 db = MySQLdb.connect("127.0.0.1","root","root","latipay" )
@@ -23,6 +24,7 @@ cursor9 = db.cursor()
 cursor10 = db.cursor()
 cursor11 = db.cursor()
 cursor12 = db.cursor()
+cursor13 = db.cursor()
 # get the enriched merchant records
 cursor.execute("SELECT merchant_code FROM latipay.test5 WHERE merchant_type_text IS NOT NULL;")
 #generate a list of all merchants in the DB
@@ -102,6 +104,8 @@ def NZDByCodeByDate():
     merchant_codes = cursor9.fetchall()
     row = 0
     for merchant_code in merchant_codes:
+        print 'processing row ' + str(row)
+        myMonth = 0
         var_dic = {}
         merchant_code = "'" + merchant_code[0] + "'"
         merchant_code = str(merchant_code)
@@ -126,46 +130,66 @@ def NZDByCodeByDate():
 
             queryYear = firstYear
             queryMonth = firstMonth
-            print queryYear
-            print lastYear
-            print queryMonth
+            # print queryYear
+            # print lastYear
+            # print queryMonth
             monthIterator = 1
             while queryYear <= lastYear:
                 if queryYear != firstYear:
                     queryMonth = 1
-                else: queryMonth = firstMonth
-                print 'bucketing by year'
-                while ((queryMonth <= lastMonth) or (queryYear < lastYear) and (queryMonth <= 12) and monthIterator <= 24):
-                    for monthIterator in range(1,25):
-                        
-                        # var_dic["month%s"% str(monthIterator)] = 0
-                        
-                        queryTransactionsByMonth = "SELECT price FROM receiver_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
-                        cursor12.execute(queryTransactionsByMonth)
-                        monthTransactions = cursor12.fetchall()
-                        monthSum = 0
-                        for transaction in monthTransactions:
-                            if transaction[0] != None:
-                                monthSum = transaction[0] + monthSum
-                        # month[monthIterator] = 0
-                        print 'fingers crossed...'
-                        print month[monthIterator]
-                        # print month2
-                        insertMonth = 'month' + str(monthIterator) + ' ' + str(monthSum)
-                        var_dic["month%s"% str(monthIterator)] = monthSum
-                        monthIterator += 1
-                        queryMonth = queryMonth + 1
-                    queryYear = queryYear + 1
-        print var_dic                       
-        if row == 0:
-            break
+                else: 
+                    queryMonth = firstMonth
+                while ((queryMonth <= lastMonth) or (queryYear < lastYear) and (queryMonth <= 12)):
+                    # print 'going for it'
+                    queryTransactionsByMonth = "SELECT price FROM receiver_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
+                    cursor12.execute(queryTransactionsByMonth)
+                    monthTransactions = cursor12.fetchall()
+                    monthSum = 0
+                    for transaction in monthTransactions:
+                        if transaction[0] == None:
+                            transaction = 0
+                        else: 
+                            transaction = transaction[0]/100
+                        monthSum = transaction + monthSum
+                    # print str(monthSum) + ' ' + str(monthIterator)
+                    var_dic[(monthIterator)] = monthSum
+                    # print monthSum
+                    monthIterator = monthIterator + 1
+                    queryMonth = queryMonth + 1
+                queryYear = queryYear + 1
+            # sort the month buckets dictionary based on month number
+            od = sorted(var_dic.items())         
+            # print od
+            # for sum[1] in od:
+            #     print sum 
+            # create a list of the month variables for insert statement into table  
+            monthlist = ''      
+            datalist = ''   
+            for month in od:
+                monthlist = monthlist + 'month'+str(month[0]) + ','
+                # print str(month[1])
+                datalist = datalist + str(month[1]) + ','
+            monthlist = monthlist.lstrip()
+            monthlist = monthlist.rstrip(',')
+            # print monthlist
+            # print datalist
+            # strip a trailing space and comma if there is one
+            datalist = datalist.lstrip()
+            datalist = datalist.rstrip(',')
+            insert1 = "INSERT INTO stats4 (month0," + monthlist +  ") VALUES (0," + datalist + ");"
+            print insert1
+            cursor13.execute(insert1)
+            db.commit()
+        # if row > 30:
+        #     break
         row = row + 1
+    # db.close()
         
 
 # NZDByType()
 # print ''
 # NZDByIndustry()
-print ''
+# print ''
 NZDByCodeByDate()
 
 
