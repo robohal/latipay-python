@@ -2,12 +2,12 @@
 
 import MySQLdb
 from datetime import datetime
-from elasticsearch import Elasticsearch
+# from elasticsearch import Elasticsearch
 from scipy import stats
 import numpy as np
 import pylab
-import collections
-es = Elasticsearch()
+# import collections
+# es = Elasticsearch()
 
 db = MySQLdb.connect("127.0.0.1","root","root","latipay" )
 
@@ -25,6 +25,9 @@ cursor10 = db.cursor()
 cursor11 = db.cursor()
 cursor12 = db.cursor()
 cursor13 = db.cursor()
+cursor14 = db.cursor()
+cursor15 = db.cursor()
+cursor16 = db.cursor()
 # get the enriched merchant records
 cursor.execute("SELECT merchant_code FROM latipay.test5 WHERE merchant_type_text IS NOT NULL;")
 #generate a list of all merchants in the DB
@@ -41,6 +44,7 @@ row = 0
 # for merchant_code in merchants_enriched:
 
 def NZDByType():
+    # generate dict with sums of transactions grouped by type.  variable output is called 'typePairs'
     typePairs = {}
     # loop through merchant types and return merchants that fit each type
     for type in types:
@@ -68,6 +72,7 @@ def NZDByType():
     print typePairs
 
 def NZDByIndustry():
+    # generate dict with sums of transactions grouped by industry.  variable output is called 'industryPairs'
     industryPairs = {}
     for industry in industries:
         industry = "'" + str(industry[0]) + "'"
@@ -95,10 +100,7 @@ def NZDByIndustry():
     print industryPairs
 
 def NZDByCodeByDate():
-    fundsArray = {'merchants':[]}
-    # generate arrays for each merchant for times
-    # times should start at the create date for the account
-    # iterator should sum transactions by day.  Transaction sum for a given day should be the Y axis.  Day is X axis.
+    # calculate transaction sums for each merchant and bucket by month.  insert sums into stats table.
     query = "SELECT merchant_code FROM test5;"
     cursor9.execute(query)
     merchant_codes = cursor9.fetchall()
@@ -140,10 +142,14 @@ def NZDByCodeByDate():
                 else: 
                     queryMonth = firstMonth
                 while ((queryMonth <= lastMonth) or (queryYear < lastYear) and (queryMonth <= 12)):
-                    # print 'going for it'
+                    # getting transactions from receiver_order table
                     queryTransactionsByMonth = "SELECT price FROM receiver_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
                     cursor12.execute(queryTransactionsByMonth)
                     monthTransactions = cursor12.fetchall()
+                    # getting transactions from transaction_order table
+                    queryTransactionOrdersByMonth = "SELECT price FROM transaction_order WHERE YEAR(create_date) = " + str(queryYear) + " AND MONTH(create_date) = " + str(queryMonth) + " AND receiver_code=" + merchant_code + ";"
+                    cursor14.execute(queryTransactionsByMonth)
+                    monthTransaction_orders = cursor14.fetchall()
                     monthSum = 0
                     for transaction in monthTransactions:
                         if transaction[0] == None:
@@ -151,6 +157,12 @@ def NZDByCodeByDate():
                         else: 
                             transaction = transaction[0]/100
                         monthSum = transaction + monthSum
+                    for transactionOrder in monthTransaction_orders:
+                        if transactionOrder[0] == None:
+                            transactionOrder = 0
+                        else: 
+                            transactionOrder = transactionOrder[0]/100
+                        monthSum = monthSum + transactionOrder
                     # print str(monthSum) + ' ' + str(monthIterator)
                     var_dic[(monthIterator)] = monthSum
                     # print monthSum
@@ -159,41 +171,219 @@ def NZDByCodeByDate():
                 queryYear = queryYear + 1
             # sort the month buckets dictionary based on month number
             od = sorted(var_dic.items())         
-            # print od
-            # for sum[1] in od:
-            #     print sum 
-            # create a list of the month variables for insert statement into table  
             monthlist = ''      
             datalist = ''   
+            count = 0
             for month in od:
                 monthlist = monthlist + 'month'+str(month[0]) + ','
                 # print str(month[1])
                 datalist = datalist + str(month[1]) + ','
+                count = count + 1 
             monthlist = monthlist.lstrip()
             monthlist = monthlist.rstrip(',')
-            # print monthlist
-            # print datalist
+           
             # strip a trailing space and comma if there is one
             datalist = datalist.lstrip()
             datalist = datalist.rstrip(',')
-            insert1 = "INSERT INTO stats4 (month0," + monthlist +  ") VALUES (0," + datalist + ");"
-            print insert1
+            print monthlist
+            print datalist
+            insert1 = "INSERT INTO stats6 (count, merchant_code, month0," + monthlist +  ") VALUES (" + str(count) + ", "+merchant_code + ", 0," + datalist + ");"
+            # print insert1
             cursor13.execute(insert1)
             db.commit()
         # if row > 30:
         #     break
         row = row + 1
-    # db.close()
+    print ('success!')
+    # disconnect from server
+    db.close()
+
+def calculateOLS():
+    # calculate slopes for trendlines of monthly revenue buckets.
+    month = 0
+    query = "SELECT merchant_code FROM stats5;"
+    cursor15.execute(query)
+    merchant_codes = cursor15.fetchall()
+    row = 0
+    # loop through merchant codes from query
+    for merchant_code in merchant_codes:
+        merchant_code = "'" + merchant_code[0] + "'"
+        # get all bucket data for specified merchant code
+        query = "SELECT * FROM stats5 WHERE merchant_code=" + merchant_code + ";"
+        cursor16.execute(query)
+        monthlyBuckets = cursor16.fetchall()
+        bucket = []
+        # generate list of longs from bucket query
+        for sub in monthlyBuckets:
+            for oneMonth in sub:
+                if type(oneMonth) == long:
+                    bucket.append(oneMonth)
+        print bucket
+        # row += 1
+        # if row > 4: 
+        return
+
+def sixMonthAvg():
+    # calculate slopes for trendlines of monthly revenue buckets.
+    month = 0
+    query = "SELECT merchant_code FROM stats5;"
+    cursor15.execute(query)
+    merchant_codes = cursor15.fetchall()
+    row = 0
+    # loop through merchant codes from query
+    totalAvg = []
+    for merchant_code in merchant_codes:
+        merchant_code = "'" + merchant_code[0] + "'"
+        # get all bucket data for specified merchant code
+        query = "SELECT * FROM stats6 WHERE merchant_code=" + merchant_code + ";"
+        cursor16.execute(query)
+        monthlyBuckets = cursor16.fetchall()
+        bucket = []
+        # generate list of longs from bucket query
+        for sub in monthlyBuckets:
+            for oneMonth in sub:
+                if type(oneMonth) == long:
+                    bucket.append(oneMonth)
+        avg = 0
+        # startPoint = 2
+        final = len(bucket)
+        monthSum2 = 0 
+        row = 0
+        for monthSum2 in bucket:
+            if row >= 2 and row <= final:
+                # print monthSum2
+                avg = (monthSum2/100) + avg
+            row = row + 1
+        avg = avg/(final-2)
+        # print avg
+        totalAvg.append(avg)
+    totalAvg = np.mean(totalAvg)
+    # in the first 6 months of signing up to latipay, a merchant gains an average of totalAvg in transactions 
+    print totalAvg
+
+def NZDByGatewayByIndustry():
+    cursor30 = db.cursor()
+    cursor31 = db.cursor()
+    cursor32 = db.cursor()
+    print 'NZD Gateway'
+    queryGateways = "SELECT distinct gateway_type FROM transaction_order;"
+    cursor32.execute(queryGateways)
+    gateways = cursor32.fetchall()
+    
+    for gateway in gateways:
+        gatewayTotal = 0
+        gatewayString = "'" + str(gateway[0]) + "'"
+        # print gateway
+        query = "SELECT receive_amount FROM transaction_order WHERE gateway_type=" + gatewayString + ";"
+        cursor31.execute(query)
+        receive_amounts = cursor31.fetchall()
+        # print (receive_amounts)
+        # print receive_amounts
+        gatewayTotal = 0
         
+        for healthcare_merchant in healthcare_merchants:
+            healthcare_merchant = "'" + healthcare_merchant[0] + "'"
+            # print healthcare_merchant
+            query = "SELECT receive_amount FROM transaction_order WHERE gateway_type="+gatewayString+" AND merchant_code="+healthcare_merchant+";"
+            cursor30.execute(query)
+            receive_amounts = cursor30.fetchall()
+            
+            var_dic = {}
+            # print gateways
+            counter = 0
+            for receive_amount in receive_amounts:
+                # print receive_amount
+                gatewayTotal = gatewayTotal + receive_amount[0]/100
+                counter = counter + 1
+            # print gatewayTotal
+        if gateway[0] == 1:
+            print 'alipay volume: ' + str(gatewayTotal) + '.  alipay counts: ' + str(counter)
+        if gateway[0] == 0:
+            print 'payease: ' + str(gatewayTotal) + '.  payease counts: ' + str(counter)
+        if gateway[0] == 2:
+            print 'wechat: ' + str(gatewayTotal) + '.  wechat counts: ' + str(counter)
+        if gateway[0] == 4:
+            print 'jdpay: ' + str(gatewayTotal) + '.  jdpay counts: ' + str(counter)
+            # print gatewayTotal
+            # break
+
+def NZDByGateway():
+    cursor30 = db.cursor()
+    cursor31 = db.cursor()
+    cursor32 = db.cursor()
+    print 'NZD Gateway'
+    queryGateways = "SELECT distinct gateway_type FROM transaction_order;"
+    cursor32.execute(queryGateways)
+    gateways = cursor32.fetchall()
+    
+    for gateway in gateways:
+        gatewayTotal = 0
+        gatewayString = "'" + str(gateway[0]) + "'"
+        # print gateway
+        query = "SELECT receive_amount FROM transaction_order WHERE gateway_type=" + gatewayString + ";"
+        cursor31.execute(query)
+        receive_amounts = cursor31.fetchall()
+        # print (receive_amounts)
+        # print receive_amounts
+        gatewayTotal = 0
+        
+        # print healthcare_merchant
+        query = "SELECT receive_amount FROM transaction_order WHERE gateway_type="+gatewayString+";"
+        cursor30.execute(query)
+        receive_amounts = cursor30.fetchall()
+        
+        var_dic = {}
+        # print gateways
+        counter = 0
+        for receive_amount in receive_amounts:
+            # print receive_amount
+            gatewayTotal = gatewayTotal + receive_amount[0]/100
+            counter = counter + 1
+        # print gatewayTotal
+        if gateway[0] == 1:
+            print 'alipay volume: ' + str(gatewayTotal) + '.  alipay counts: ' + str(counter)
+        if gateway[0] == 0:
+            print 'payease: ' + str(gatewayTotal) + '.  payease counts: ' + str(counter)
+        if gateway[0] == 2:
+            print 'wechat: ' + str(gatewayTotal) + '.  wechat counts: ' + str(counter)
+        if gateway[0] == 4:
+            print 'jdpay: ' + str(gatewayTotal) + '.  jdpay counts: ' + str(counter)
+            # print gatewayTotal
+            # break
+
+def merchantListByIndustry():
+    # generate dict with sums of transactions grouped by industry.  variable output is called 'industryPairs'
+    var_dic = {}
+    cursor44 = db.cursor()
+    for industry in industries:
+        industry = "'" + str(industry[0]) + "'"
+        query = "SELECT merchant_code FROM test5 WHERE merchant_industry_text=" + industry + ";"
+        cursor44.execute(query)
+        merchant_codes_for_industry = cursor44.fetchall()
+        # in order to sum the transactions for each type
+        # print merchant_codes_for_industry
+        var_dic[(industry)] = merchant_codes_for_industry
+    # print var_dic["'Accommodation and Food Services'"]
+    accomodation_and_food_merchants = var_dic["'Accommodation and Food Services'"]
+    global healthcare_merchants
+    healthcare_merchants = var_dic["'Healthcare'"]
+
 
 # NZDByType()
 # print ''
 # NZDByIndustry()
 # print ''
-NZDByCodeByDate()
+# NZDByCodeByDate()
+# print ''
+# calculateOLS()
+# print ''
+# sixMonthAvg()
+# print ''
+# merchantListByIndustry()
+# print ''
+# NZDByGatewayByIndustry()
+# print ''
+# NZDByGateway()
 
 
 
-print ('success!')
-# disconnect from server
-db.close()
