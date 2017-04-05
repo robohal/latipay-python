@@ -41,8 +41,8 @@ for merchant_code in merchants:
         currency = trans_info[8]
 
 
-    # insert1 = "INSERT INTO" + tableName + "(id_number, merchant_code, id_name, issue_date, expiration_date, place_of_issue) VALUES ("
-    # insert2 = id_number + ',' + merchant_code + ',' + id_name + ',' + issue_date + ',' + expiration_date + ',' + place_of_issue");"
+    # insert1 = "INSERT INTO" + tableName + "(transaction_id, amount, payment_method, create_date, product_type, payer_id, organisation_id, user_id, currency) VALUES ("
+    # insert2 = transaction_id + ',' + amount + ',' + payment_method + ',' + create_date + ',' + product_type + ',' + payer_id, organisation_id, user_id, currency");"
     # insertQuery = insert1 + insert2
     # insertCursor = db.cursor()
     # insertCursor.execute(insertQuery)
