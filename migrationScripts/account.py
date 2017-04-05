@@ -53,8 +53,8 @@ for merchant_code in merchants:
 
 
 
-    # insert1 = "INSERT INTO" + tableName + "(contact_name, contact_address, contact_nationality, birthday, contact_phone, contact_email, currency) VALUES ("
-    # insert2 = contact_name + ',' + contact_address + ',' + contact_nationality + ',' + birthday + ',' + contact_phone + ',' + contact_email + ',' + currency");"
+    # insert1 = "INSERT INTO" + tableName + "(contact_name, contact_address, contact_nationality, contact_dob, contact_phone, contact_email, currency) VALUES ("
+    # insert2 = contact_name + ',' + contact_address + ',' + contact_nationality + ',' + contact_dob + ',' + contact_phone + ',' + contact_email + ',' + currency");"
     # insertQuery = insert1 + insert2
     # insertCursor = db.cursor()
     # insertCursor.execute(insertQuery)
