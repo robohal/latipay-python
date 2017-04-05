@@ -38,6 +38,9 @@ cursor26 = db.cursor()
 cursor27 = db.cursor()
 cursor28 = db.cursor()
 cursor29 = db.cursor()
+cursor46 = db.cursor()
+cursor47 = db.cursor()
+cursor48 = db.cursor()
 
 #create table with name = tableName
 # cursor28.execute("CREATE TABLE test5 (merchant_code VARCHAR(255), merchant_name VARCHAR(255), merchant_address_street VARCHAR(255), merchant_address_city VARCHAR(255), merchant_address_province VARCHAR(255), merchant_address_country VARCHAR(255), merchant_email VARCHAR(255), merchant_phone VARCHAR(255), merchant_comment VARCHAR(255), merchant_type_text VARCHAR(255), merchant_industry_text VARCHAR(255), merchant_physical_presence_text VARCHAR(255), merchant_residence_text VARCHAR(255), merchant_incorporation_text VARCHAR(255), merchant_trade_country_text VARCHAR(255), merchant_product_text VARCHAR(255));")
@@ -98,9 +101,14 @@ baseQuery23 = "SELECT option_text FROM latipay.question_option WHERE id="
 baseQuery24 = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=14 AND merchant_code="
 baseQuery25 = "SELECT option_text FROM latipay.question_option WHERE id="
 
-#Merchant employee count lookups
-baseQuery26 = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=19 AND merchant_code="
+#Merchant expected value / annum
+baseQuery26 = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=4 AND merchant_code="
 baseQuery27 = "SELECT option_text FROM latipay.question_option WHERE id="
+
+#Merchant expected value / annum
+baseQuery46 = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=6 AND merchant_code="
+baseQuery47 = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=8 AND merchant_code="
+baseQuery48 = "SELECT option_text FROM latipay.question_option WHERE id="
 
 
 print('Finished collecting merchant ids...')
@@ -108,7 +116,7 @@ print('Finished collecting merchant ids...')
 #get merchant_name for each merchant_id
 row = 0
 for merchant_code in merchants:
-    print ('processing: ' + str(row))
+    # print ('processing: ' + str(row))
     merchant_code = str(merchant_code)
     merchant_code = merchant_code.split('(')
     merchant_code = str(merchant_code[1])
@@ -285,32 +293,27 @@ for merchant_code in merchants:
         merchant_product_text = "'" + merchant_product_text + "'"
     else: merchant_product_text = "null"
 
-    # merchant_employee_count_code
-    # cursor26.execute(baseQuery26 + merchant_code +';')
-    # merchant_employee_count_code = cursor26.fetchone()
-    # if merchant_employee_count_code != None:
-    #     merchant_employee_count_code = str(merchant_employee_count_code)
-    #     merchant_employee_count_code = merchant_employee_count_code.split('(')
-    #     merchant_employee_count_code = str(merchant_employee_count_code[1])
-    #     merchant_employee_count_code = merchant_employee_count_code.split(',')
-    #     merchant_employee_count_code = str(merchant_employee_count_code[0])
-    #     merchant_employee_count_code = merchant_employee_count_code.strip("L")
-    #     merchant_employee_count_code.split("L")
-    #     cursor27.execute(baseQuery27 + merchant_employee_count_code +';')
-    #     merchant_employee_count_text = cursor27.fetchone()
-    #     merchant_employee_count_text = str(merchant_employee_count_text)
-    #     merchant_employee_count_text = merchant_employee_count_text.split('(')
-    #     merchant_employee_count_text = str(merchant_employee_count_text[1])
-    #     merchant_employee_count_text = merchant_employee_count_text.split(',')
-    #     merchant_employee_count_text = str(merchant_employee_count_text[0])
-    # else: merchant_employee_count_text = ''
-    # print merchant_employee_count_text
+    # expected transaction value per annum
+    cursor46.execute(baseQuery46 + merchant_code +';')
+    cursor47.execute(baseQuery47 + merchant_code +';')
+    merchant_expected_trans_value_code = cursor46.fetchone()
+    merchant_expected_trans_value_text = "null"
+    if merchant_expected_trans_value_code == None:
+        merchant_expected_trans_value_code = cursor47.fetchone()
+    if merchant_expected_trans_value_code != None:
+        merchant_expected_trans_value_code = "'" + str(merchant_expected_trans_value_code[0]) + "'"
+        cursor48.execute(baseQuery48 + merchant_expected_trans_value_code +';')
+        merchant_expected_trans_value_text = cursor48.fetchone()
+        print "expected value is: " + str(merchant_expected_trans_value_text[0])
+        merchant_expected_trans_value_text = str(merchant_expected_trans_value_text[0])
+        merchant_expected_trans_value_text = "'" + merchant_expected_trans_value_text + "'"
+    else: merchant_expected_trans_value_text = "null"
 
     #tracks progress
     row = row + 1
 
-    insert1 = "INSERT INTO test6 (merchant_code, merchant_name, merchant_address_street, merchant_address_city, merchant_address_province, merchant_address_country, merchant_email, merchant_phone, merchant_comment, merchant_type_text, merchant_industry_text, merchant_physical_presence_text, merchant_residence_text, merchant_incorporation_text, merchant_trade_country_text, merchant_product_text) VALUES ("
-    insert2 = merchant_code + ',' + merchant_name + ',' + merchant_address_street + ',' + merchant_address_city + ',' + merchant_address_province + ',' + merchant_address_country + ',' + merchant_email + ',' + merchant_phone + ',' + merchant_comment + ',' + merchant_type_text + ',' + merchant_industry_text + ',' + merchant_physical_presence_text + ',' + merchant_residence_text + ',' + merchant_incorporation_text + ',' + merchant_trade_country_text + ',' + merchant_product_text + ");"
+    insert1 = "INSERT INTO test7 (merchant_code, merchant_name, merchant_address_street, merchant_address_city, merchant_address_province, merchant_address_country, merchant_email, merchant_phone, merchant_comment, merchant_type_text, merchant_industry_text, merchant_physical_presence_text, merchant_residence_text, merchant_incorporation_text, merchant_trade_country_text, merchant_product_text, merchant_expected_trans_value_text) VALUES ("
+    insert2 = merchant_code + ',' + merchant_name + ',' + merchant_address_street + ',' + merchant_address_city + ',' + merchant_address_province + ',' + merchant_address_country + ',' + merchant_email + ',' + merchant_phone + ',' + merchant_comment + ',' + merchant_type_text + ',' + merchant_industry_text + ',' + merchant_physical_presence_text + ',' + merchant_residence_text + ',' + merchant_incorporation_text + ',' + merchant_trade_country_text + ',' + merchant_product_text + ',' + merchant_expected_trans_value_text + ");"
     insertQuery = insert1 + insert2
     
     cursor29.execute(insertQuery)

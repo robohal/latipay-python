@@ -198,30 +198,6 @@ def NZDByCodeByDate():
     # disconnect from server
     db.close()
 
-def calculateOLS():
-    # calculate slopes for trendlines of monthly revenue buckets.
-    month = 0
-    query = "SELECT merchant_code FROM stats5;"
-    cursor15.execute(query)
-    merchant_codes = cursor15.fetchall()
-    row = 0
-    # loop through merchant codes from query
-    for merchant_code in merchant_codes:
-        merchant_code = "'" + merchant_code[0] + "'"
-        # get all bucket data for specified merchant code
-        query = "SELECT * FROM stats5 WHERE merchant_code=" + merchant_code + ";"
-        cursor16.execute(query)
-        monthlyBuckets = cursor16.fetchall()
-        bucket = []
-        # generate list of longs from bucket query
-        for sub in monthlyBuckets:
-            for oneMonth in sub:
-                if type(oneMonth) == long:
-                    bucket.append(oneMonth)
-        print bucket
-        # row += 1
-        # if row > 4: 
-        return
 
 def sixMonthAvg():
     # calculate slopes for trendlines of monthly revenue buckets.

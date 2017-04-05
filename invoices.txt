@@ -1,0 +1,176 @@
+Merchant: M00001457;  Active: 1; Monthly Avg Trans: 0.0100; Projected Value: None
+Merchant: M00000176;  Active: 1; Monthly Avg Trans: 0.0100; Projected Value: None
+Merchant: M00000312;  Active: 1; Monthly Avg Trans: 0.0300; Projected Value: None
+Merchant: M00000838_0002;  Active: 1; Monthly Avg Trans: 0.0600; Projected Value: None
+Merchant: M00001428;  Active: 1; Monthly Avg Trans: 0.0800; Projected Value: None
+Merchant: M00000117;  Active: 1; Monthly Avg Trans: 0.0900; Projected Value: None
+Merchant: M00000034;  Active: 1; Monthly Avg Trans: 0.1000; Projected Value: None
+Merchant: M00000126;  Active: 1; Monthly Avg Trans: 0.1000; Projected Value: None
+Merchant: M00000002_0006;  Active: 1; Monthly Avg Trans: 0.2600; Projected Value: None
+Merchant: M00001442_0001;  Active: 1; Monthly Avg Trans: 0.3000; Projected Value: None
+Merchant: M00001464;  Active: 1; Monthly Avg Trans: 0.3300; Projected Value: None
+Merchant: M00001198_0001;  Active: 1; Monthly Avg Trans: 0.5500; Projected Value: None
+Merchant: M00001458_0001;  Active: 1; Monthly Avg Trans: 0.5800; Projected Value: None
+Merchant: M00000313;  Active: 1; Monthly Avg Trans: 0.5800; Projected Value: None
+Merchant: M00001188;  Active: 3; Monthly Avg Trans: 0.2900; Projected Value: None
+Merchant: M00000933;  Active: 1; Monthly Avg Trans: 1.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000273;  Active: 1; Monthly Avg Trans: 1.0000; Projected Value: None
+Merchant: M00000311;  Active: 1; Monthly Avg Trans: 1.0200; Projected Value: None
+Merchant: M00000838_0001;  Active: 2; Monthly Avg Trans: 0.5250; Projected Value: None
+Merchant: M00001270_0006;  Active: 1; Monthly Avg Trans: 1.2000; Projected Value: None
+Merchant: M00001322_0001;  Active: 1; Monthly Avg Trans: 1.2000; Projected Value: None
+Merchant: M00000862;  Active: 2; Monthly Avg Trans: 0.6300; Projected Value: None
+Merchant: M00000002_0002;  Active: 2; Monthly Avg Trans: 0.8550; Projected Value: None
+Merchant: M00000814;  Active: 1; Monthly Avg Trans: 2.2000; Projected Value: $100,000 > $500,000
+Merchant: M00000897;  Active: 3; Monthly Avg Trans: 0.8000; Projected Value: <100,000
+Merchant: M00000015;  Active: 3; Monthly Avg Trans: 0.9633333333333333333333333333; Projected Value: None
+Merchant: M00000870;  Active: 1; Monthly Avg Trans: 3.1700; Projected Value: None
+Merchant: M00001175;  Active: 4; Monthly Avg Trans: 0.8700; Projected Value: None
+Merchant: M00001174;  Active: 4; Monthly Avg Trans: 1.0575; Projected Value: None
+Merchant: M00000804;  Active: 1; Monthly Avg Trans: 5.0000; Projected Value: None
+Merchant: M00001270;  Active: 4; Monthly Avg Trans: 1.3325; Projected Value: $100,000 > $500,000
+Merchant: M00001444;  Active: 1; Monthly Avg Trans: 5.6100; Projected Value: None
+Merchant: M00000875;  Active: 1; Monthly Avg Trans: 6.0000; Projected Value: None
+Merchant: M00000609;  Active: 1; Monthly Avg Trans: 10.0000; Projected Value: None
+Merchant: M00001022_0009;  Active: 1; Monthly Avg Trans: 10.0000; Projected Value: None
+Merchant: M00000308;  Active: 1; Monthly Avg Trans: 22.8700; Projected Value: None
+Merchant: M00000018;  Active: 3; Monthly Avg Trans: 19.40333333333333333333333333; Projected Value: None
+Merchant: M00000992;  Active: 1; Monthly Avg Trans: 89.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000039;  Active: 1; Monthly Avg Trans: 101.0000; Projected Value: None
+Merchant: M00000023;  Active: 2; Monthly Avg Trans: 65.0700; Projected Value: None
+Merchant: M00001370;  Active: 1; Monthly Avg Trans: 163.0000; Projected Value: None
+Merchant: M00001106;  Active: 1; Monthly Avg Trans: 180.0000; Projected Value: None
+Merchant: M00000133;  Active: 1; Monthly Avg Trans: 200.0000; Projected Value: None
+Merchant: M00001049;  Active: 4; Monthly Avg Trans: 52.7250; Projected Value: <100,000
+Merchant: M00001314;  Active: 1; Monthly Avg Trans: 211.0000; Projected Value: None
+Merchant: M00001022;  Active: 5; Monthly Avg Trans: 50.3520; Projected Value: <100,000
+Merchant: M00001256;  Active: 1; Monthly Avg Trans: 520.0000; Projected Value: None
+Merchant: M00001351;  Active: 1; Monthly Avg Trans: 548.1000; Projected Value: None
+Merchant: M00000733;  Active: 1; Monthly Avg Trans: 594.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000536;  Active: 1; Monthly Avg Trans: 600.0000; Projected Value: None
+Merchant: M00001276;  Active: 3; Monthly Avg Trans: 203.3333333333333333333333333; Projected Value: $100,000 > $500,000
+Merchant: M00000950;  Active: 3; Monthly Avg Trans: 211.7733333333333333333333333; Projected Value: $100,000 > $500,000
+Merchant: M00001364;  Active: 1; Monthly Avg Trans: 689.2300; Projected Value: <100,000
+Merchant: M00000981;  Active: 1; Monthly Avg Trans: 789.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000009;  Active: 1; Monthly Avg Trans: 1000.0000; Projected Value: None
+Merchant: M00001297;  Active: 1; Monthly Avg Trans: 1000.1000; Projected Value: $500,000 > $5M
+Merchant: M00000974;  Active: 2; Monthly Avg Trans: 607.2250; Projected Value: $100,000 > $500,000
+Merchant: M00000001;  Active: 11; Monthly Avg Trans: 123.3354545454545454545454545; Projected Value: None
+Merchant: M00000014;  Active: 11; Monthly Avg Trans: 130.3354545454545454545454545; Projected Value: None
+Merchant: M00000038;  Active: 1; Monthly Avg Trans: 2877.3600; Projected Value: $5M > $10M
+Merchant: M00001154;  Active: 3; Monthly Avg Trans: 1254.583333333333333333333333; Projected Value: <100,000
+Merchant: M00000631;  Active: 1; Monthly Avg Trans: 4164.0000; Projected Value: None
+Merchant: M00000707;  Active: 1; Monthly Avg Trans: 4200.0000; Projected Value: None
+Merchant: M00001300;  Active: 3; Monthly Avg Trans: 1577.773333333333333333333333; Projected Value: $100,000 > $500,000
+Merchant: M00001094;  Active: 1; Monthly Avg Trans: 5000.0000; Projected Value: None
+Merchant: M00000238;  Active: 1; Monthly Avg Trans: 5000.0000; Projected Value: None
+Merchant: M00000241;  Active: 2; Monthly Avg Trans: 2525.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000114;  Active: 1; Monthly Avg Trans: 5476.0100; Projected Value: $500,000 > $5M
+Merchant: M00000736;  Active: 8; Monthly Avg Trans: 769.02875; Projected Value: $100,000 > $500,000
+Merchant: M00000002;  Active: 15; Monthly Avg Trans: 419.9873333333333333333333333; Projected Value: <100,000
+Merchant: M00001240;  Active: 1; Monthly Avg Trans: 6403.5000; Projected Value: <100,000
+Merchant: M00000807;  Active: 1; Monthly Avg Trans: 6600.0000; Projected Value: <100,000
+Merchant: M00000662;  Active: 1; Monthly Avg Trans: 7000.0000; Projected Value: None
+Merchant: M00001203;  Active: 3; Monthly Avg Trans: 2434.633333333333333333333333; Projected Value: None
+Merchant: M00001058;  Active: 2; Monthly Avg Trans: 3830.0000; Projected Value: <100,000
+Merchant: M00001130;  Active: 1; Monthly Avg Trans: 8880.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000961;  Active: 1; Monthly Avg Trans: 10000.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000738;  Active: 1; Monthly Avg Trans: 10000.0000; Projected Value: None
+Merchant: M00001047;  Active: 6; Monthly Avg Trans: 1674.951666666666666666666667; Projected Value: None
+Merchant: M00000008;  Active: 5; Monthly Avg Trans: 2083.6000; Projected Value: None
+Merchant: M00000980;  Active: 4; Monthly Avg Trans: 2737.3750; Projected Value: $100,000 > $500,000
+Merchant: M00001140;  Active: 2; Monthly Avg Trans: 5484.9300; Projected Value: $100,000 > $500,000
+Merchant: M00001176;  Active: 1; Monthly Avg Trans: 11000.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000175;  Active: 13; Monthly Avg Trans: 856.7784615384615384615384615; Projected Value: None
+Merchant: M00000827;  Active: 1; Monthly Avg Trans: 11169.4600; Projected Value: None
+Merchant: M00000398;  Active: 2; Monthly Avg Trans: 5610.5000; Projected Value: None
+Merchant: M00000204;  Active: 1; Monthly Avg Trans: 14078.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000013;  Active: 8; Monthly Avg Trans: 2260.1250; Projected Value: None
+Merchant: M00000049;  Active: 8; Monthly Avg Trans: 2400.0000; Projected Value: None
+Merchant: M00000879;  Active: 4; Monthly Avg Trans: 5234.5225; Projected Value: None
+Merchant: M00000104;  Active: 1; Monthly Avg Trans: 21760.9300; Projected Value: None
+Merchant: M00000591;  Active: 1; Monthly Avg Trans: 22000.0000; Projected Value: None
+Merchant: M00000470;  Active: 11; Monthly Avg Trans: 2070.860909090909090909090909; Projected Value: None
+Merchant: M00000019;  Active: 2; Monthly Avg Trans: 11683.6000; Projected Value: None
+Merchant: M00000011;  Active: 2; Monthly Avg Trans: 11700.5000; Projected Value: None
+Merchant: M00000189;  Active: 1; Monthly Avg Trans: 25480.0000; Projected Value: $500,000 > $5M
+Merchant: M00000625;  Active: 2; Monthly Avg Trans: 13490.0000; Projected Value: None
+Merchant: M00000442;  Active: 4; Monthly Avg Trans: 7068.2850; Projected Value: <100,000
+Merchant: M00000112;  Active: 3; Monthly Avg Trans: 9666.666666666666666666666667; Projected Value: None
+Merchant: M00000407;  Active: 1; Monthly Avg Trans: 30000.0000; Projected Value: None
+Merchant: M00000687;  Active: 8; Monthly Avg Trans: 3843.5050; Projected Value: $100,000 > $500,000
+Merchant: M00000024;  Active: 1; Monthly Avg Trans: 33000.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000119;  Active: 1; Monthly Avg Trans: 34849.0000; Projected Value: None
+Merchant: M00000041;  Active: 8; Monthly Avg Trans: 4375.6800; Projected Value: None
+Merchant: M00000768;  Active: 1; Monthly Avg Trans: 37594.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000657;  Active: 6; Monthly Avg Trans: 6558.726666666666666666666667; Projected Value: $100,000 > $500,000
+Merchant: M00000356;  Active: 7; Monthly Avg Trans: 5639.628571428571428571428571; Projected Value: $100,000 > $500,000
+Merchant: M00000097;  Active: 1; Monthly Avg Trans: 41032.0000; Projected Value: None
+Merchant: M00001273;  Active: 1; Monthly Avg Trans: 41474.8000; Projected Value: None
+Merchant: M00001272;  Active: 2; Monthly Avg Trans: 22010.0000; Projected Value: <100,000
+Merchant: M00000408;  Active: 1; Monthly Avg Trans: 46500.0000; Projected Value: None
+Merchant: M00000114_0003;  Active: 2; Monthly Avg Trans: 23583.5000; Projected Value: None
+Merchant: M00000114_0002;  Active: 1; Monthly Avg Trans: 47674.0000; Projected Value: None
+Merchant: M00000800;  Active: 8; Monthly Avg Trans: 5965.8750; Projected Value: <100,000
+Merchant: M00000545;  Active: 4; Monthly Avg Trans: 12362.5000; Projected Value: None
+Merchant: M00000187;  Active: 1; Monthly Avg Trans: 49964.0000; Projected Value: None
+Merchant: M00000985;  Active: 1; Monthly Avg Trans: 50000.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000941;  Active: 1; Monthly Avg Trans: 51834.0000; Projected Value: None
+Merchant: M00000434;  Active: 8; Monthly Avg Trans: 7562.5000; Projected Value: None
+Merchant: M00001129;  Active: 1; Monthly Avg Trans: 65000.0000; Projected Value: <100,000
+Merchant: M00000062;  Active: 1; Monthly Avg Trans: 70000.0000; Projected Value: None
+Merchant: M00000037;  Active: 3; Monthly Avg Trans: 25938.57666666666666666666667; Projected Value: <100,000
+Merchant: M00000782;  Active: 9; Monthly Avg Trans: 8846.047777777777777777777778; Projected Value: <100,000
+Merchant: M00000012;  Active: 10; Monthly Avg Trans: 8047.0130; Projected Value: None
+Merchant: M00000108;  Active: 1; Monthly Avg Trans: 87850.0000; Projected Value: None
+Merchant: M00000793;  Active: 7; Monthly Avg Trans: 12662.22857142857142857142857; Projected Value: $100,000 > $500,000
+Merchant: M00000114_0001;  Active: 2; Monthly Avg Trans: 50421.0000; Projected Value: None
+Merchant: M00000114_0010;  Active: 1; Monthly Avg Trans: 100947.0000; Projected Value: None
+Merchant: M00000822;  Active: 4; Monthly Avg Trans: 25984.5000; Projected Value: $100,000 > $500,000
+Merchant: M00000271;  Active: 12; Monthly Avg Trans: 8666.666666666666666666666667; Projected Value: None
+Merchant: M00000114_0008;  Active: 1; Monthly Avg Trans: 104229.0000; Projected Value: None
+Merchant: M00000007;  Active: 14; Monthly Avg Trans: 7755.933571428571428571428571; Projected Value: None
+Merchant: M00000172;  Active: 8; Monthly Avg Trans: 13837.5000; Projected Value: None
+Merchant: M00000336;  Active: 3; Monthly Avg Trans: 38333.33333333333333333333333; Projected Value: None
+Merchant: M00000497;  Active: 11; Monthly Avg Trans: 10593.63636363636363636363636; Projected Value: $100,000 > $500,000
+Merchant: M00000973;  Active: 6; Monthly Avg Trans: 20100.0000; Projected Value: <100,000
+Merchant: M00000544;  Active: 1; Monthly Avg Trans: 124000.0000; Projected Value: None
+Merchant: M00000390;  Active: 1; Monthly Avg Trans: 129730.0000; Projected Value: <100,000
+Merchant: M00000065;  Active: 1; Monthly Avg Trans: 130000.0000; Projected Value: None
+Merchant: M00000664;  Active: 6; Monthly Avg Trans: 22186.5850; Projected Value: $100,000 > $500,000
+Merchant: M00000074;  Active: 1; Monthly Avg Trans: 134000.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000555;  Active: 1; Monthly Avg Trans: 135000.0000; Projected Value: None
+Merchant: M00000081;  Active: 1; Monthly Avg Trans: 136000.0000; Projected Value: $500,000 > $5M
+Merchant: M00001194;  Active: 4; Monthly Avg Trans: 34473.1375; Projected Value: $100,000 > $500,000
+Merchant: M00000903;  Active: 7; Monthly Avg Trans: 19849.21857142857142857142857; Projected Value: $100,000 > $500,000
+Merchant: M00000061;  Active: 1; Monthly Avg Trans: 139500.0000; Projected Value: None
+Merchant: M00001021;  Active: 4; Monthly Avg Trans: 35495.5600; Projected Value: <100,000
+Merchant: M00000859;  Active: 7; Monthly Avg Trans: 22046.9200; Projected Value: $100,000 > $500,000
+Merchant: M00001294;  Active: 2; Monthly Avg Trans: 79749.8500; Projected Value: $500,000 > $5M
+Merchant: M00000068;  Active: 1; Monthly Avg Trans: 164300.0000; Projected Value: None
+Merchant: M00000373;  Active: 2; Monthly Avg Trans: 94147.5000; Projected Value: None
+Merchant: M00001005;  Active: 4; Monthly Avg Trans: 51044.0500; Projected Value: <100,000
+Merchant: M00000085;  Active: 1; Monthly Avg Trans: 208590.0000; Projected Value: $100,000 > $500,000
+Merchant: M00001350;  Active: 2; Monthly Avg Trans: 111159.1500; Projected Value: <100,000
+Merchant: M00000801;  Active: 9; Monthly Avg Trans: 24984.94555555555555555555556; Projected Value: $100,000 > $500,000
+Merchant: M00001024;  Active: 6; Monthly Avg Trans: 37609.00666666666666666666667; Projected Value: $100,000 > $500,000
+Merchant: M00000905;  Active: 7; Monthly Avg Trans: 35614.91571428571428571428571; Projected Value: $100,000 > $500,000
+Merchant: M00000902;  Active: 7; Monthly Avg Trans: 38634.6300; Projected Value: $100,000 > $500,000
+Merchant: M00000663;  Active: 1; Monthly Avg Trans: 297300.0000; Projected Value: $100,000 > $500,000
+Merchant: M00000027;  Active: 4; Monthly Avg Trans: 75008.5000; Projected Value: None
+Merchant: M00000395;  Active: 7; Monthly Avg Trans: 43689.14285714285714285714286; Projected Value: None
+Merchant: M00000160;  Active: 9; Monthly Avg Trans: 34144.32111111111111111111111; Projected Value: $500,000 > $5M
+Merchant: M00000904;  Active: 7; Monthly Avg Trans: 47713.12142857142857142857143; Projected Value: $100,000 > $500,000
+Merchant: M00000838;  Active: 4; Monthly Avg Trans: 97617.7025; Projected Value: $100,000 > $500,000
+Merchant: M00000004;  Active: 11; Monthly Avg Trans: 36547.28545454545454545454545; Projected Value: >$10M
+Merchant: M00000871;  Active: 4; Monthly Avg Trans: 100857.4750; Projected Value: $100,000 > $500,000
+Merchant: M00000075;  Active: 9; Monthly Avg Trans: 47746.30111111111111111111111; Projected Value: $500,000 > $5M
+Merchant: M00000445;  Active: 10; Monthly Avg Trans: 45360.5800; Projected Value: $100,000 > $500,000
+Merchant: M00000010;  Active: 1; Monthly Avg Trans: 458634.0000; Projected Value: None
+Merchant: M00000861;  Active: 5; Monthly Avg Trans: 173735.5480; Projected Value: None
+Merchant: M00000755;  Active: 9; Monthly Avg Trans: 116443.3333333333333333333333; Projected Value: $100,000 > $500,000
+Merchant: M00000020;  Active: 4; Monthly Avg Trans: 263034.9075; Projected Value: $100,000 > $500,000
+Merchant: M00000055;  Active: 2; Monthly Avg Trans: 636665.0000; Projected Value: None
+Merchant: M00001307;  Active: 3; Monthly Avg Trans: 991000.0000; Projected Value: <100,000
+Merchant: M00000213;  Active: 13; Monthly Avg Trans: 292923.0769230769230769230769; Projected Value: $100,000 > $500,000
+Merchant: M00000088;  Active: 15; Monthly Avg Trans: 394354.2940; Projected Value: >$10M
