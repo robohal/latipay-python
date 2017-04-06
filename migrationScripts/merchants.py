@@ -1,8 +1,6 @@
 #!/usr/bin/python
 
 import MySQLdb
-from elasticsearch import Elasticsearch
-es = Elasticsearch()
 
 tableName = 'test4'
 # Open database connection
@@ -169,13 +167,7 @@ for merchant_code in merchants:
     cursor10.execute(baseQuery10 + merchant_code +';')
     merchant_type_code = cursor10.fetchone()
     if merchant_type_code != None:
-        merchant_type_code = str(merchant_type_code)
-        merchant_type_code = merchant_type_code.split('(')
-        merchant_type_code = str(merchant_type_code[1])
-        merchant_type_code = merchant_type_code.split(',')
-        merchant_type_code = str(merchant_type_code[0])
-        merchant_type_code = merchant_type_code.strip("L")
-        merchant_type_code.split("L")
+        merchant_type_code = "'" + str(merchant_type_code[0]) + "'"
         cursor11.execute(baseQuery11 + merchant_type_code +';')
         merchant_type_text = cursor11.fetchone()
         merchant_type_text = "'" + merchant_type_text[0] + "'"
@@ -184,13 +176,7 @@ for merchant_code in merchants:
     cursor12.execute(baseQuery12 + merchant_code +';')
     merchant_industry_code = cursor12.fetchone()
     if merchant_industry_code != None:
-        merchant_industry_code = str(merchant_industry_code)
-        merchant_industry_code = merchant_industry_code.split('(')
-        merchant_industry_code = str(merchant_industry_code[1])
-        merchant_industry_code = merchant_industry_code.split(',')
-        merchant_industry_code = str(merchant_industry_code[0])
-        merchant_industry_code = merchant_industry_code.strip("L")
-        merchant_industry_code.split("L")
+        merchant_industry_code = "'" + str(merchant_industry_code[0]) + "'"
         cursor13.execute(baseQuery13 + merchant_industry_code +';')
         merchant_industry_text = cursor13.fetchone()
         merchant_industry_text = "'" + merchant_industry_text[0] + "'"
@@ -199,13 +185,7 @@ for merchant_code in merchants:
     cursor14.execute(baseQuery14 + merchant_code +';')
     merchant_physical_presence_code = cursor14.fetchone()
     if merchant_physical_presence_code != None:
-        merchant_physical_presence_code = str(merchant_physical_presence_code)
-        merchant_physical_presence_code = merchant_physical_presence_code.split('(')
-        merchant_physical_presence_code = str(merchant_physical_presence_code[1])
-        merchant_physical_presence_code = merchant_physical_presence_code.split(',')
-        merchant_physical_presence_code = str(merchant_physical_presence_code[0])
-        merchant_physical_presence_code = merchant_physical_presence_code.strip("L")
-        merchant_physical_presence_code.split("L")
+        merchant_physical_presence_code = "'" + str(merchant_physical_presence_code[0]) + "'"
         cursor15.execute(baseQuery15 + merchant_physical_presence_code +';')
         merchant_physical_presence_text = cursor15.fetchone()
         merchant_physical_presence_text = "'" + merchant_physical_presence_text[0] + "'"
@@ -214,13 +194,7 @@ for merchant_code in merchants:
     cursor16.execute(baseQuery16 + merchant_code +';')
     merchant_residence_code = cursor16.fetchone()
     if merchant_residence_code != None:
-        merchant_residence_code = str(merchant_residence_code)
-        merchant_residence_code = merchant_residence_code.split('(')
-        merchant_residence_code = str(merchant_residence_code[1])
-        merchant_residence_code = merchant_residence_code.split(',')
-        merchant_residence_code = str(merchant_residence_code[0])
-        merchant_residence_code = merchant_residence_code.strip("L")
-        merchant_residence_code.split("L")
+        merchant_residence_code = "'" + str(merchant_residence_code[0]) + "'"
         cursor17.execute(baseQuery17 + merchant_residence_code +';')
         merchant_residence_text = cursor17.fetchone()
         merchant_residence_text = "'" + merchant_residence_text[0] + "'"
@@ -229,64 +203,64 @@ for merchant_code in merchants:
     cursor18.execute(baseQuery18 + merchant_code +';')
     merchant_incorporation_code = cursor18.fetchone()
     if merchant_incorporation_code != None:
-        merchant_incorporation_code = str(merchant_incorporation_code)
-        merchant_incorporation_code = merchant_incorporation_code.split('(')
-        merchant_incorporation_code = str(merchant_incorporation_code[1])
-        merchant_incorporation_code = merchant_incorporation_code.split(',')
-        merchant_incorporation_code = str(merchant_incorporation_code[0])
-        merchant_incorporation_code = merchant_incorporation_code.strip("L")
-        merchant_incorporation_code.split("L")
+        merchant_incorporation_code = "'" + str(merchant_incorporation_code[0]) + "'"
         cursor19.execute(baseQuery19 + merchant_incorporation_code +';')
         merchant_incorporation_text = cursor19.fetchone()
         merchant_incorporation_text = "'" + merchant_incorporation_text[0] + "'"
     else: merchant_incorporation_text = "null"
 
+    onboardingCodeCursor = db.cursor()
+    onboardingCursor = db.cursor()
+    onboardingQuery = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=17 AND merchant_code="  + merchant_code +';'
+    onboardingCode = onboardingCodeCursor.execute(onboardingQuery)
+    onboarding_code = onboardingCodeCursor.fetchone()
+    if onboarding_code != None:
+        onboarding_code = "'" + str(onboarding_code[0]) + "'"
+        onboardingCursor.execute("SELECT option_text FROM latipay.question_option WHERE id=" + onboarding_code +';')
+        # cursor19.execute(baseQuery19 + onboarding_code +';')
+        onboarding_text = onboardingCursor.fetchone()
+        onboarding_text = "'" + onboarding_text[0] + "'"
+    else: onboarding_text = "null"
+    # print onboarding_text
+
+    customerRelationshipCodeCursor = db.cursor()
+    customerRelationshipCursor = db.cursor()
+    customerRelationshipQuery = "SELECT option_id FROM latipay.merchant_question_option WHERE question_id=19 AND merchant_code="  + merchant_code +';'
+    customerRelationshipCodeCursor.execute(customerRelationshipQuery)
+    customerRelationship_code = customerRelationshipCodeCursor.fetchone()
+    if customerRelationship_code != None:
+        customerRelationship_code = "'" + str(customerRelationship_code[0]) + "'"
+        customerRelationshipCursor.execute("SELECT option_text FROM latipay.question_option WHERE id=" + customerRelationship_code +';')
+        # cursor19.execute(baseQuery19 + onboarding_code +';')
+        customerRelationshipText = customerRelationshipCursor.fetchone()
+        customerRelationshipText = "'" + customerRelationshipText[0] + "'"
+    else: customerRelationshipText = "null"
+    # print onboarding_text
+
     cursor20.execute(baseQuery20 + merchant_code +';')
     merchant_trade_country_code = cursor20.fetchone()
     if merchant_trade_country_code != None:
-        merchant_trade_country_code = str(merchant_trade_country_code)
-        merchant_trade_country_code = merchant_trade_country_code.split('(')
-        merchant_trade_country_code = str(merchant_trade_country_code[1])
-        merchant_trade_country_code = merchant_trade_country_code.split(',')
-        merchant_trade_country_code = str(merchant_trade_country_code[0])
-        merchant_trade_country_code = merchant_trade_country_code.strip("L")
-        merchant_trade_country_code.split("L")
+        merchant_trade_country_code = "'" + str(merchant_trade_country_code[0]) + "'"
         cursor21.execute(baseQuery21 + merchant_trade_country_code +';')
         merchant_trade_country_text = cursor21.fetchone()
         merchant_trade_country_text = "'" + merchant_trade_country_text[0] + "'"
     else: merchant_trade_country_text = "null"
 
-    merchant_customer_count_code
+    # merchant_customer_count_code
     cursor22.execute(baseQuery22 + merchant_code +';')
     merchant_customer_count_code = cursor22.fetchone()
     if merchant_customer_count_code != None:
-        merchant_customer_count_code = str(merchant_customer_count_code)
-        merchant_customer_count_code = merchant_customer_count_code.split('(')
-        merchant_customer_count_code = str(merchant_customer_count_code[1])
-        merchant_customer_count_code = merchant_customer_count_code.split(',')
-        merchant_customer_count_code = str(merchant_customer_count_code[0])
-        merchant_customer_count_code = merchant_customer_count_code.strip("L")
-        merchant_customer_count_code.split("L")
+        merchant_customer_count_code = "'" + str(merchant_customer_count_code[0]) + "'"
         cursor23.execute(baseQuery23 + merchant_customer_count_code +';')
         merchant_customer_count_text = cursor23.fetchone()
-        merchant_customer_count_text = str(merchant_customer_count_text)
-        merchant_customer_count_text = merchant_customer_count_text.split('(')
-        merchant_customer_count_text = str(merchant_customer_count_text[1])
-        merchant_customer_count_text = merchant_customer_count_text.split(',')
-        merchant_customer_count_text = str(merchant_customer_count_text[0])
+        merchant_customer_count_text = "'" + str(merchant_customer_count_text[0]) + "'"
     else: merchant_customer_count_text = ''
-    print merchant_customer_count_text
+    # print merchant_customer_count_text
 
     cursor24.execute(baseQuery24 + merchant_code +';')
     merchant_product_code = cursor24.fetchone()
     if merchant_product_code != None:
-        merchant_product_code = str(merchant_product_code)
-        merchant_product_code = merchant_product_code.split('(')
-        merchant_product_code = str(merchant_product_code[1])
-        merchant_product_code = merchant_product_code.split(',')
-        merchant_product_code = str(merchant_product_code[0])
-        merchant_product_code = merchant_product_code.strip("L")
-        merchant_product_code.split("L")
+        merchant_product_code = "'" + str(merchant_product_code[0]) + "'"
         cursor25.execute(baseQuery25 + merchant_product_code +';')
         merchant_product_text = cursor25.fetchone()
         merchant_product_text = str(merchant_product_text[0])
@@ -304,25 +278,76 @@ for merchant_code in merchants:
         merchant_expected_trans_value_code = "'" + str(merchant_expected_trans_value_code[0]) + "'"
         cursor48.execute(baseQuery48 + merchant_expected_trans_value_code +';')
         merchant_expected_trans_value_text = cursor48.fetchone()
-        print "expected value is: " + str(merchant_expected_trans_value_text[0])
+        # print "expected value is: " + str(merchant_expected_trans_value_text[0])
         merchant_expected_trans_value_text = str(merchant_expected_trans_value_text[0])
         merchant_expected_trans_value_text = "'" + merchant_expected_trans_value_text + "'"
     else: merchant_expected_trans_value_text = "null"
 
-    #tracks progress
-    row = row + 1
 
-    insert1 = "INSERT INTO test7 (merchant_code, merchant_name, merchant_address_street, merchant_address_city, merchant_address_province, merchant_address_country, merchant_email, merchant_phone, merchant_comment, merchant_type_text, merchant_industry_text, merchant_physical_presence_text, merchant_residence_text, merchant_incorporation_text, merchant_trade_country_text, merchant_product_text, merchant_expected_trans_value_text) VALUES ("
-    insert2 = merchant_code + ',' + merchant_name + ',' + merchant_address_street + ',' + merchant_address_city + ',' + merchant_address_province + ',' + merchant_address_country + ',' + merchant_email + ',' + merchant_phone + ',' + merchant_comment + ',' + merchant_type_text + ',' + merchant_industry_text + ',' + merchant_physical_presence_text + ',' + merchant_residence_text + ',' + merchant_incorporation_text + ',' + merchant_trade_country_text + ',' + merchant_product_text + ',' + merchant_expected_trans_value_text + ");"
-    insertQuery = insert1 + insert2
+    infoCursor = db.cursor()
+    infoCursor.execute("SELECT sales from merchant_info WHERE code=" + merchant_code +';')
+    sales_person = infoCursor.fetchone()
+    if sales_person != None and sales_person[0] != None and sales_person != '' :
+        sales_person = "'" + sales_person[0] + "'"
+        # print sales_person
+    else: sales_person = "null"
+
+    mcc_codeCursor = db.cursor()
+    mcc_codeCursor.execute("SELECT mcc_code from merchant_info WHERE code=" + merchant_code +';')
+    mcc_code = mcc_codeCursor.fetchone()
+    if mcc_code != None and mcc_code[0] != None and mcc_code != '' :
+        mcc_code = "'" + mcc_code[0] + "'"
+        # print mcc_code
+    else: mcc_code = "null"
+    if mcc_code != None and mcc_code[0] != None and mcc_code != '' and mcc_code != "null":
+        mccCursor = db.cursor()
+        mccCursor.execute("SELECT en_name from mcc_code WHERE code=" + mcc_code +';')
+        mcc = mccCursor.fetchone()
+        # print mcc
+
+    # mcc_codeCursor = db.cursor()
+    # mcc_codeCursor.execute("SELECT mcc_code from merchant_info WHERE code=" + merchant_code +';')
+    # mcc_code = mcc_codeCursor.fetchone()
+    # if mcc_code != None and mcc_code[0] != None and mcc_code != '' :
+    #     mcc_code = "'" + mcc_code[0] + "'"
+    #     # print mcc_code
+    # else: mcc_code = "null"
+    # if mcc_code != None and mcc_code[0] != None and mcc_code != '' and mcc_code != "null":
+    #     mccCursor = db.cursor()
+    #     mccCursor.execute("SELECT en_name from mcc_code WHERE code=" + mcc_code +';')
+    #     mcc = mccCursor.fetchone()
+    #     print mcc
+
+    # print (merchant_code)
+    # print (merchant_name)
+    # print (merchant_email)
+    # print (merchant_phone)
+    # print (merchant_address_city)
+    # print (merchant_address_province)
+    # print (merchant_address_country)
+    # print (merchant_comment)
+    # print (merchant_type_text)
+    # print (merchant_industry_text)
+    # print (merchant_physical_presence_text)
+    # print (merchant_residence_text)
+    # print (merchant_incorporation_text)
+    # print (merchant_trade_country_text)
+    # print (merchant_customer_count_text)
+    # print (merchant_product_text)
+    # print (merchant_expected_trans_value_text)
+    # print (onboarding_text)
+    print (customerRelationshipText)
+
+
+
+
+
+
+ # insert1 = "INSERT INTO test7 (merchant_code, merchant_name, merchant_address_street, merchant_address_city, merchant_address_province, merchant_address_country, merchant_email, merchant_phone, merchant_comment, merchant_type_text, merchant_industry_text, merchant_physical_presence_text, merchant_residence_text, merchant_incorporation_text, merchant_trade_country_text, merchant_product_text, merchant_expected_trans_value_text) VALUES ("
+    # insert2 = merchant_code + ',' + merchant_name + ',' + merchant_address_street + ',' + merchant_address_city + ',' + merchant_address_province + ',' + merchant_address_country + ',' + merchant_email + ',' + merchant_phone + ',' + merchant_comment + ',' + merchant_type_text + ',' + merchant_industry_text + ',' + merchant_physical_presence_text + ',' + merchant_residence_text + ',' + merchant_incorporation_text + ',' + merchant_trade_country_text + ',' + merchant_product_text + ',' + merchant_expected_trans_value_text + ");"
+    # insertQuery = insert1 + insert2
     
-    cursor29.execute(insertQuery)
-    db.commit()
-
-    # if row > 20:
-    #     break
-
-print ('success!')
-
+    # cursor29.execute(insertQuery)
+    # db.commit()
 # disconnect from server
 db.close()
