@@ -6,7 +6,7 @@ import MySQLdb
 import time
 from time import gmtime, strftime
 
-tableName = 'document'
+tableName = 'withdrawal'
 # Open database connection
 db = MySQLdb.connect("127.0.0.1","root","root","latipay" )
 
@@ -17,7 +17,7 @@ cursor.execute("SELECT code FROM latipay.merchant_base;")
 #generate a list of all merchants in the DB
 merchants = list(cursor.fetchall())
 
-apiQuery = "SELECT order_id, create_date, gateway_type, receive_amount, item_name, payer_merchant_code, merchant_code, id_number, choose_currency FROM latipay.transaction_order WHERE merchant_code="
+apiQuery = "SELECT settle_order_no, create_date, receive_amount, receive_currency, status, payee_merchant_code FROM latipay.settle_order WHERE payee_merchant_code="
 #get id_number for each merchant_id
 for merchant_code in merchants:
     merchant_code = merchant_code[0]
@@ -27,22 +27,20 @@ for merchant_code in merchants:
     if trans_info is not None and trans_info[1] != '' and trans_info[1] is not None:
 
         transaction_id = trans_info[0]
-        amount = trans_info[3]
-        payment_method = trans_info[2]
+        amount = trans_info[2]
+        # payment_method = trans_info[2]
         if trans_info[1] is not None and trans_info[1] != '':
             create_date = time.strftime("%Y:%m:%d")
         else: create_date = trans_info[1]
-
-        product_type = trans_info[4]
-        payer_id = trans_info[5]
-
-        organisation_id = trans_info[6]
-        user_id = trans_info[7]
-        currency = trans_info[8]
+        # amount = trans_info[]
+        organisation_id = trans_info[4]
+        status = trans_info[5]
+        currency = trans_info[3]
+        # type = 'invoice'
 
 
-    # insert1 = "INSERT INTO" + tableName + "(transaction_id, amount, payment_method, create_date, product_type, payer_id, organisation_id, user_id, currency) VALUES ("
-    # insert2 = transaction_id + ',' + amount + ',' + payment_method + ',' + create_date + ',' + product_type + ',' + payer_id, organisation_id, user_id, currency");"
+    # insert1 = "INSERT INTO" + tableName + "(settle_order_no, amount, create_date, organisation_id, currency) VALUES ("
+    # insert2 = settle_order_no + ',' + amount + ',' + create_date + ',' + organisation_id + ',' + currency");"
     # insertQuery = insert1 + insert2
     # insertCursor = db.cursor()
     # insertCursor.execute(insertQuery)
